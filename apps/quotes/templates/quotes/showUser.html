@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <title>{{ user.alias }}'s Quotable Quotes</title>
+        <meta description='Quotable Quotes App page for one user '>
+        <meta charset='utf-8'/>
+    </head>
+    <body>
+        <div id='wrapper'>
+            <div id="header">
+                <h1>Posts by {{ user.alias }}</h1>
+                <h3>Count: {{ quotes.count }}</h3>
+                <form action="{% url 'quotes:index' %}" id="dashboard" method="post">
+                    {% csrf_token %}
+                    <input type="submit" name="dashboardbutton" value="Dashboard">
+                </form>        
+                <form action="{% url 'auth:logout' %}" id="logoutform" method="post">
+                    {% csrf_token %}
+                    <input type="submit" name="logoutbutton" value="Log Out">
+                </form>
+                <hr>
+                <table border>
+                    <tr>
+                        <th>Quotes Submitted</th>
+                    </tr>
+                {% for quote in quotes %}
+                    <tr>
+                        <td><strong>{{ quote.quoted_by }}:</strong> {{ quote.message }}</td>
+                    </tr>
+                {% endfor %}                    
+                </table>      
+            </div>
+        </div>
+    </body>
+</html>
